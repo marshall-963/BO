@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* خلفية الصفحة مع تأثير parallax */
+body {
+    background: url('https://plus.unsplash.com/premium_photo-1661882403999-46081e67c401?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZ3JhbW1pbmd8ZW58MHx8MHx8fDA%3D') no-repeat center center fixed;
+    background-size: cover;
+    color: #222;
+    min-height: 100vh;
+    overflow-x: hidden;
+    will-change: background-position;
+    transition: background-position 0.2s;
+}
+
+/* شريط التقدم أعلى الصفحة */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0077ff 40%, #00e0ff 100%);
+    width: 0;
+    z-index: 9999;
+    transition: width 0.2s;
+}
+
+/* طبقة شفافة فوق الخلفية لتسهيل القراءة */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(246, 248, 250, 0.80);
+    z-index: -1;
+}
+
+/* الحاوية الرئيسية في منتصف الصفحة */
+.container {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* الكروت الرئيسية */
+.about, .blog-posts, .optometry, .card {
+    width: 90vw;
+    max-width: 100vw;
+    margin: 24px 0;
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: box-shadow 0.3s, transform 0.3s, opacity 0.7s;
+}
+
+/* Scroll Animation للكروت */
+.card-visible, .about.card-visible, .blog-posts.card-visible, .optometry.card-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* تأثير hover للكروت */
+.about:hover, .blog-posts:hover, .optometry:hover, .card:hover {
+    box-shadow: 0 8px 32px rgba(0, 119, 255, 0.13), 0 2px 8px rgba(0,0,0,0.07);
+    transform: translateY(-8px) scale(1.01);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+/* فاصل أنيق بين الكروت */
+.card-divider {
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, #0077ff 0%, #00e0ff 100%);
+    border: none;
+    margin: 0 auto 32px auto;
+    opacity: 0.18;
+    border-radius: 2px;
+}
+
+/* حل مشكلة tabs (التبويبات) تبدأ من بداية الكرت */
+.optometry {
+    position: relative;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-right: 24px;
+    padding-left: 24px;
+}
+
+.optometry .tabs {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    justify-content: flex-start; /* التبويبات تبدأ من بداية الكرت */
+}
+
+.left, .right {
+    padding: 30px;
+    flex: 1;
+}
+
+.left {
+    border-right: 1px solid #eee;
+    text-align: center;
+}
+
+.avatar {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 350px;
+    max-width: 90vw;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0077ff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #0077ff;
+    margin-bottom: 5px;
+    font-family: 'Poppins', Arial, sans-serif;
+    text-align: center;
+}
+
+p {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+/* أيقونات العناوين */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.section-title i {
+    font-size: 1.5em;
+    color: #0077ff;
+    vertical-align: middle;
+}
+
+/* زر بشكل موجة عند الضغط */
+.btn, .read-more, .tab-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:active::after,
+.read-more:active::after,
+.tab-link:active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 120%;
+    height: 120%;
+    background: rgba(0,119,255,0.13);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    animation: ripple 0.4s linear;
+    pointer-events: none;
+    z-index: 2;
+}
+@keyframes ripple {
+    to {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.btn {
+    display: block;
+    background: #e0f7fa;
+    color: #37474f;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #b2ebf2;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 0;
+    justify-content: center;
+}
+
+.nav-link {
+    color: #0077ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s, background 0.2s, border 0.2s;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 2px solid #0077ff;
+    background: transparent;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+.nav-link:hover {
+    background: #e6f0ff;
+    color: #0056b3;
+    border-color: #0056b3;
+}
+
+main {
+    min-height: 60vh;
+}
+
+.about {
+    margin-bottom: 32px;
+}
+
+.about h2, .blog-posts h2, .optometry h2 {
+    color: #0077ff;
+    margin-top: 0;
+}
+
+.post {
+    border-bottom: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post h3 {
+    margin: 0 0 8px 0;
+    color: #222;
+}
+
+.post p {
+    margin: 0 0 10px 0;
+    color: #444;
+}
+
+.read-more {
+    color: #fff;
+    background: #0077ff;
+    padding: 7px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.98rem;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.read-more:hover {
+    background: #0056b3;
+}
+
+.footer {
+    display: block !important;
+    background: #f6f8fa;
+    color: #555;
+    text-align: center;
+    padding: 24px 0 10px 0;
+    font-size: 1rem;
+    margin-top: 40px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.footer .footer-social {
+    margin-bottom: 10px;
+}
+
+.footer .footer-social a {
+    color: #0077ff;
+    margin: 0 8px;
+    font-size: 1.3em;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer .footer-social a:hover {
+    color: #0056b3;
+}
+
+.optometry {
+    margin-top: 32px;
+}
+
+.optometry h2 {
+    margin-bottom: 22px;
+}
+
+.tabs {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 18px;
+    justify-content: center;
+}
+
+.tab-link {
+    background: #e6f0ff;
+    border: none;
+    color: #0077ff;
+    padding: 8px 18px;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+}
+
+.tab-link.active, .tab-link:hover {
+    background: #0077ff;
+    color: #fff;
+}
+
+.tab-content {
+    display: none;
+    border-top: 2px solid #0077ff;
+    padding: 18px 0 0 0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tab-content li {
+    margin-bottom: 12px;
+}
+
+.tab-content a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.tab-content a:hover {
+    color: #0077ff;
+    text-decoration: underline;
+}
+
+@media (min-width: 900px) {
+    main.container {
+        margin-left: 0;
+    }
+}
+
+/* توسيط جميع الكروت داخل الصفحة */
+main.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0 !important;
+}
+
+header,
+.main-header,
+.header-flex,
+nav {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* توسيط محتوى البروفايل والروابط */
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: center;
+}
+
+.profile p {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.card:hover, .optometry:hover, .post:hover {
+    box-shadow: 0 8px 32px rgba(0, 119, 255, 0.13);
+    transition: box-shadow 0.3s;
+}
+
+/* زر العودة للأعلى فقط */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    background: #0077ff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* نافذة الترحيب */
+#welcome-modal {
+    display: none;
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+#welcome-modal .modal-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    max-width: 90vw;
+    width: 350px;
+    box-shadow: 0 8px 32px rgba(0,119,255,0.13);
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+#welcome-modal .modal-content h3 {
+    color: #0077ff;
+    margin-bottom: 12px;
+}
+#welcome-modal .modal-content button {
+    margin-top: 18px;
+    background: #0077ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 22px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#welcome-modal .modal-content button:hover {
+    background: #0056b3;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95);}
+    to { opacity: 1; transform: scale(1);}
+}
